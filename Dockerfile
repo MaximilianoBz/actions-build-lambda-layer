@@ -1,4 +1,11 @@
-FROM public.ecr.aws/sam/build-python3.9
+FROM python:3.9
+
+RUN groupadd -r user && useradd -r -g user user
+USER user
+
+WORKDIR /app
+RUN chown user:user /app
+COPY . /app
 
 LABEL version="1.0.0"
 
@@ -13,6 +20,7 @@ LABEL maintainer="Maximiliano Baez <maximilianombaez@gmail.com>"
 
 #ARG DEBIAN_FRONTEND=noninteractive
 #RUN apt-get update && apt-get install -y awscli
+
 
 ADD entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
