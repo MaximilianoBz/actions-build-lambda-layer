@@ -1,17 +1,11 @@
 #!/bin/bash
-# docker run -v "$PWD":/var/task "public.ecr.aws/sam/build-python3.9" /bin/sh -c "pip install -r requirements.txt -t python/lib/python3.9/site-packages/; exit"
 
 set -e
 
-if [[ -z "$LAMBDA_LAYER_FOLDER" ]]; then
-    echo "Layer Folder"
-fi
+ls -1 | grep "_layer" > layer_folder_list.txt
 
-echo $LAMBDA_LAYER_FOLDER
-
-LAMBDA_TASK_ROOT="/github/workspace/auth_layer"
-
-echo $LAMBDA_TASK_ROOT
-
-# Build layer
-pip install -r requirements.txt -t python/lib/python3.9/site-packages/
+# For each layer folder in file layer_folder_list.txt
+for LAMBDA_LAYER_FOLDER in $(cat layer_folder_list.txt); do
+    echo "Building layer: $LAMBDA_LAYER_FOLDER"
+    pip install -r $LAMBDA_LAYER_FOLDER/requirements.txt -t $LAMBDA_LAYER_FOLDER/python/lib/python3.9/site-packages/
+done
