@@ -7,11 +7,11 @@ if [[ -z "$LAMBDA_LAYER_FOLDER" ]]; then
     echo "Layer Folder"
 fi
 
-print $LAMBDA_LAYER_FOLDER
+echo $LAMBDA_LAYER_FOLDER
 
 LAMBDA_TASK_ROOT="/github/workspace/auth_layer"
 
-print $LAMBDA_TASK_ROOT
+echo $LAMBDA_TASK_ROOT
 
 # Build layer
 pip install -r requirements.txt -t python/lib/python3.9/site-packages/
