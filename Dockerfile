@@ -1,10 +1,11 @@
 FROM python:3.9
 
+WORKDIR /app
 RUN groupadd -r user && useradd -r -g user user
+RUN chown user:user /app
+
 USER user
 
-WORKDIR /app
-RUN chown user:user /app
 COPY . /app
 
 LABEL version="1.0.0"
